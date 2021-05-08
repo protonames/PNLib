@@ -1,0 +1,15 @@
+{
+  "name": "com.protonames.pnlib",
+  "version": "1.0.0",
+  "displayName": "PNLib",
+  "description": "Lorem ipsum description.",
+  "unity": "2020.3",
+  "license": "MIT",
+  "author": {
+    "name": "Felipe Nunes",
+    "email": "felipe@protonam.es",
+    "url": "https://protonam.es"
+  },
+  "dependencies": {
+  },
+}
