@@ -1,4 +1,4 @@
-﻿namespace PNLib.Attributes
+namespace PNLib.Attributes
 {
-	public enum StatsModifierType { Flat, Percentage }
+	public enum StatsModifierType { Addition, Multiplier, Override }
 }
