@@ -9,7 +9,6 @@ namespace PNLib.Audio
 		private static AudioSource audioSource;
 		private static float volume = .8f;
 		private static bool isInitialized;
-
 		public static event Action OnVolumeChangedEvent;
 
 		public static float Volume
@@ -35,7 +34,9 @@ namespace PNLib.Audio
 		public static void Play(AudioClip clip)
 		{
 			if (!oneShot)
+			{
 				oneShot = new GameObject("SoundFX");
+			}
 
 			AudioSource oneShotSource = oneShot.AddComponent<AudioSource>();
 			oneShotSource.PlayOneShot(clip, Volume);
@@ -49,7 +50,9 @@ namespace PNLib.Audio
 		public static void Play(AudioClip clip, float volume)
 		{
 			if (!oneShot)
+			{
 				oneShot = new GameObject("SoundFX");
+			}
 
 			AudioSource oneShotSource = oneShot.AddComponent<AudioSource>();
 			oneShotSource.PlayOneShot(clip, volume);

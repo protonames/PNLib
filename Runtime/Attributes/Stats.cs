@@ -15,7 +15,10 @@ namespace PNLib.Attributes
 			private set
 			{
 				if (Mathf.Abs(value - float.Epsilon) < 0f)
-					throw new Exception("Stats Maximum can not be zero.");
+				{
+					Debug.LogError("Stats Maximum can not be zero.");
+					return;
+				}
 
 				hasChanged = true;
 				maximum = value;
@@ -23,7 +26,6 @@ namespace PNLib.Attributes
 		}
 
 		public float NormalizedValue => Value / Maximum;
-
 		public float RawValue { get; private set; }
 
 		public float Value
@@ -85,32 +87,47 @@ namespace PNLib.Attributes
 			Value = value;
 		}
 
-		public void AddModifier(StatsModifier modifier, bool hasLowPriority = false)
+		public void AddModifier(StatsModifier modifier)
+		{
+			AddModifier(modifier, false);
+		}
+
+		public void AddModifier(StatsModifier modifier, bool hasLowPriority)
 		{
 			hasChanged = true;
 
 			if (hasLowPriority)
+			{
 				statsModifiers.Insert(0, modifier);
+			}
 			else
+			{
 				statsModifiers.Add(modifier);
+			}
 		}
 
 		public void RemoveModifier(StatsModifier modifier)
 		{
 			if (statsModifiers.Remove(modifier))
+			{
 				hasChanged = true;
+			}
 		}
 
 		public void RemoveAllModifiersFromSource([NotNull] object source)
 		{
 			if (statsModifiers.RemoveAll(x => x.Source.Equals(source)) > 0)
+			{
 				hasChanged = true;
+			}
 		}
 
 		public void RemoveAllModifiers()
 		{
 			if (statsModifiers.Count <= 0)
+			{
 				return;
+			}
 
 			hasChanged = true;
 			statsModifiers.Clear();
@@ -153,7 +170,9 @@ namespace PNLib.Attributes
 				float? overrideValue = statsModifiers.LastOrDefault(x => x.Type == StatsModifierType.Override)?.Value;
 
 				if (overrideValue != null)
+				{
 					modifiedValue = (float) overrideValue;
+				}
 			}
 
 			modifiedValue = Mathf.Clamp(modifiedValue, Minimum, Maximum);

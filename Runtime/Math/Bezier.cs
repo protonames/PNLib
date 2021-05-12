@@ -23,7 +23,12 @@ namespace PNLib.Math
 			lineRenderer = GetComponent<LineRenderer>();
 		}
 
-		public void SetCurve(Vector3 start, Vector3 control, Vector3 end, int pointCount = 50)
+		public void SetCurve(Vector3 start, Vector3 control, Vector3 end)
+		{
+			SetCurve(start, control, end, 50);
+		}
+
+		public void SetCurve(Vector3 start, Vector3 control, Vector3 end, int pointCount)
 		{
 			this.start = start;
 			controlPoint = control;

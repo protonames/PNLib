@@ -7,7 +7,6 @@ namespace PNLib.Utility
 	public class MouseEnterExitEvents : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 	{
 		public event Action OnMouseEnterEvent;
-
 		public event Action OnMouseExitEvent;
 
 		public void OnPointerEnter(PointerEventData eventData)

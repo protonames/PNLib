@@ -31,7 +31,9 @@ namespace PNLib.Web
 		private void Start()
 		{
 			if (!Application.isEditor)
+			{
 				ValidateURL();
+			}
 		}
 
 		[DllImport("__Internal")]
@@ -42,7 +44,9 @@ namespace PNLib.Web
 			ValidateURLWithJavaScript();
 
 			if (IsValidURL(allowedHosts) == false)
+			{
 				Redirect();
+			}
 		}
 
 		private static void Redirect()
@@ -65,15 +69,21 @@ namespace PNLib.Web
 				string url = allowedUrLs[i];
 
 				if (url.IndexOf("http://", StringComparison.Ordinal) == 0)
+				{
 					url = url.Substring(7);
+				}
 				else if (url.IndexOf("https://", StringComparison.Ordinal) == 0)
+				{
 					url = url.Substring(8);
+				}
 
 				urls.Append(url);
 				urls.Append("'))");
 
 				if (i < (allowedUrLs.Count - 1))
+				{
 					urls.Append(" && ");
+				}
 			}
 
 			return urls.ToString();
@@ -86,7 +96,9 @@ namespace PNLib.Web
 			javascriptTest.Append("(document.location.host != 'localhost') && (document.location.host != '')");
 
 			if (allowedHosts.Length > 0)
+			{
 				javascriptTest.Append(" && ");
+			}
 
 			javascriptTest.Append(CompileHosts(allowedHosts));
 			javascriptTest.Append("){ document.location='");

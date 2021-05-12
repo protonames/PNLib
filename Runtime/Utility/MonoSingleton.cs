@@ -2,44 +2,53 @@
 
 namespace PNLib.Utility
 {
-	public abstract class MonoSingleton<T> : MonoBehaviour
+	public abstract class MonoSingleton<T> : SingletonCollection
 	where T : MonoBehaviour
 	{
-		protected static T Instance;
-
-		// ReSharper disable once StaticMemberInGenericType
-		private static bool isApplicationQuitting;
+		[SerializeField]
+		private bool isPersistent;
 
 		protected virtual void Awake()
 		{
-			if (Instance == null)
-				Instance = this as T;
-			else if (Instance != this)
-				Destroy(gameObject);
-		}
+			if (!Instances.TryGetValue(typeof(T), out object instance))
+			{
+				instance = this as T;
+				Instances.Add(typeof(T), instance);
 
-		protected virtual void OnApplicationQuit()
-		{
-			isApplicationQuitting = true;
+				if (isPersistent)
+				{
+					DontDestroyOnLoad(gameObject);
+				}
+			}
+			else
+			{
+				Destroy(gameObject);
+			}
 		}
 
 		public static T GetInstance()
 		{
-			if (isApplicationQuitting)
+			if (IsApplicationQuitting)
+			{
 				return null;
+			}
 
-			if (Instance != null)
-				return Instance;
+			if (Instances.TryGetValue(typeof(T), out object instance))
+			{
+				return (T) instance;
+			}
 
-			Instance = FindObjectOfType<T>();
+			instance = FindObjectOfType<T>();
 
-			if (Instance != null)
-				return Instance;
+			if (instance != null)
+			{
+				return (T) instance;
+			}
 
 			GameObject rootGameObject = new GameObject();
 			rootGameObject.name = typeof(T).Name;
-			Instance = rootGameObject.AddComponent<T>();
-			return Instance;
+			instance = rootGameObject.AddComponent<T>();
+			return (T) instance;
 		}
 	}
 }

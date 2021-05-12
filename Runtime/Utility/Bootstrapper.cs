@@ -10,11 +10,6 @@ namespace PNLib.Utility
 		[SerializeField]
 		private VSyncType vSyncCount;
 
-		private enum VSyncType
-		{
-			DontSync = 0, EveryVBlank = 1, EverySecondVBlank = 2,
-		}
-
 		private void Awake()
 		{
 			QualitySettings.vSyncCount = (int) vSyncCount;

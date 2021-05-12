@@ -32,7 +32,9 @@ namespace PNLib.Random
 			foreach (ChanceTable itemWeight in orderedItems.Where(x => x.WeightedChance >= 0))
 			{
 				if (roll < itemWeight.WeightedChance)
+				{
 					return Save(itemWeight.Item);
+				}
 
 				roll -= itemWeight.WeightedChance;
 			}
@@ -80,7 +82,9 @@ namespace PNLib.Random
 			int historySize = CalculateHistorySize();
 
 			if (history.Count >= historySize)
+			{
 				history.RemoveRange(0, (history.Count - historySize) + 1);
+			}
 
 			history.Add(item);
 			return item;
@@ -96,7 +100,9 @@ namespace PNLib.Random
 			while (true)
 			{
 				if (b == 0)
+				{
 					return a;
+				}
 
 				int aux = a;
 				a = b;
@@ -107,10 +113,24 @@ namespace PNLib.Random
 		[Serializable]
 		public class ChanceTable
 		{
-			public float WeightedChance { get; set; }
+			[SerializeField]
+			private int baseChance;
 
-			public int BaseChance;
-			public T Item;
+			public int BaseChance => baseChance;
+
+			[SerializeField]
+			private T item;
+
+			public T Item => item;
+
+			[SerializeField]
+			private float weightedChance;
+
+			public float WeightedChance
+			{
+				get => weightedChance;
+				set => weightedChance = value;
+			}
 		}
 	}
 }

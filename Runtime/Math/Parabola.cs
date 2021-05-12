@@ -7,10 +7,14 @@ namespace PNLib.Math
 		public static ParabolaInfo Calculate(Vector3 start, Vector3 end, float height)
 		{
 			if (height <= end.y)
+			{
 				height = end.y;
+			}
 
 			if (height <= start.y)
+			{
 				height = start.y;
+			}
 
 			float yDisplacement = end.y - start.y;
 			Vector3 xzDisplacement = new Vector3(end.x - start.x, 0, end.z - start.z);
@@ -29,7 +33,12 @@ namespace PNLib.Math
 			};
 		}
 
-		public static Vector3[] GetCurvePoints(ParabolaInfo info, int pointCount = 30)
+		public static Vector3[] GetCurvePoints(ParabolaInfo info)
+		{
+			return GetCurvePoints(info, 30);
+		}
+
+		public static Vector3[] GetCurvePoints(ParabolaInfo info, int pointCount)
 		{
 			Vector3[] points = new Vector3[pointCount + 1];
 			points[0] = info.Origin;
@@ -47,9 +56,9 @@ namespace PNLib.Math
 
 		public class ParabolaInfo
 		{
-			public Vector3 Origin;
-			public Vector3 Velocity;
-			public float Duration;
+			public Vector3 Origin { get; set; }
+			public Vector3 Velocity { get; set; }
+			public float Duration { get; set; }
 		}
 	}
 }

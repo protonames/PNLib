@@ -16,7 +16,9 @@ namespace PNLib.Utility
 		public void Submit()
 		{
 			if (!textInput.text.Contains("@"))
+			{
 				return;
+			}
 
 			StartCoroutine(SubmitGoogleFormData(textInput.text));
 		}

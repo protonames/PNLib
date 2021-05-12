@@ -15,9 +15,9 @@ namespace PNLib.Time
 			UpdateAllTimers();
 		}
 
-		public void RegisterTimer(RegisterTimer registerTimer)
+		public void RegisterTimer(RegisterTimer timer)
 		{
-			timersToAdd.Add(registerTimer);
+			timersToAdd.Add(timer);
 		}
 
 		public void CancelAllTimers()

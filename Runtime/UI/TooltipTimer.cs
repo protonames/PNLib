@@ -1,7 +1,7 @@
 ﻿namespace PNLib.UI
 {
-	public class TooltipTimer
+	public abstract class TooltipTimer
 	{
-		public float Duration;
+		public float Duration { get; set; }
 	}
 }

@@ -7,21 +7,30 @@ namespace PNLib.Time
 	public class RegisterTimer
 	{
 		public float Duration { get; }
-
 		public bool IsLooped { get; }
-
 		public bool IsCompleted { get; private set; }
-
 		public bool UsesRealTime { get; }
-
 		public bool IsPaused => timeElapsedBeforePause.HasValue;
-
 		public bool IsCancelled => timeElapsedBeforeCancel.HasValue;
+		public bool IsDone => IsCompleted || IsCancelled;
 
-		public bool IsDone => IsCompleted || IsCancelled || IsOwnerDestroyed;
+		public static RegisterTimer Register(float duration, Action onComplete)
+		{
+			return Register(duration, onComplete, null);
+		}
 
-		public static RegisterTimer Register(float duration, Action onComplete, Action<float> onUpdate = null,
-			bool isLooped = false, bool useRealTime = false, MonoBehaviour autoDestroyOwner = null)
+		public static RegisterTimer Register(float duration, Action onComplete, Action<float> onUpdate)
+		{
+			return Register(duration, onComplete, onUpdate, false);
+		}
+
+		public static RegisterTimer Register(float duration, Action onComplete, Action<float> onUpdate, bool isLooped)
+		{
+			return Register(duration, onComplete, onUpdate, isLooped, false);
+		}
+
+		public static RegisterTimer Register(float duration, Action onComplete, Action<float> onUpdate, bool isLooped,
+			bool useRealTime)
 		{
 			if (!manager)
 			{
@@ -47,8 +56,7 @@ namespace PNLib.Time
 				onComplete,
 				onUpdate,
 				isLooped,
-				useRealTime,
-				autoDestroyOwner
+				useRealTime
 			);
 
 			manager.RegisterTimer(registerTimer);
@@ -73,25 +81,33 @@ namespace PNLib.Time
 		public static void CancelAllRegisteredTimers()
 		{
 			if (manager)
+			{
 				manager.CancelAllTimers();
+			}
 		}
 
 		public static void PauseAllRegisteredTimers()
 		{
 			if (manager)
+			{
 				manager.PauseAllTimers();
+			}
 		}
 
 		public static void ResumeAllRegisteredTimers()
 		{
 			if (manager)
+			{
 				manager.ResumeAllTimers();
+			}
 		}
 
 		public void Cancel()
 		{
 			if (IsDone)
+			{
 				return;
+			}
 
 			timeElapsedBeforeCancel = GetTimeElapsed();
 			timeElapsedBeforePause = null;
@@ -100,7 +116,9 @@ namespace PNLib.Time
 		public void Pause()
 		{
 			if (IsPaused || IsDone)
+			{
 				return;
+			}
 
 			timeElapsedBeforePause = GetTimeElapsed();
 		}
@@ -108,7 +126,9 @@ namespace PNLib.Time
 		public void Resume()
 		{
 			if (!IsPaused || IsDone)
+			{
 				return;
+			}
 
 			timeElapsedBeforePause = null;
 		}
@@ -116,7 +136,9 @@ namespace PNLib.Time
 		public float GetTimeElapsed()
 		{
 			if (IsCompleted || GetWorldTime() >= GetFireTime())
+			{
 				return Duration;
+			}
 
 			return timeElapsedBeforeCancel ?? timeElapsedBeforePause ?? (GetWorldTime() - startTime);
 		}
@@ -137,28 +159,21 @@ namespace PNLib.Time
 		}
 
 		private static RegisterTimerManager manager;
-
-		private bool IsOwnerDestroyed => hasAutoDestroyOwner && !autoDestroyOwner;
-
 		private readonly Action onComplete;
 		private readonly Action<float> onUpdate;
 		private float startTime;
 		private float lastUpdateTime;
 		private float? timeElapsedBeforeCancel;
 		private float? timeElapsedBeforePause;
-		private readonly MonoBehaviour autoDestroyOwner;
-		private readonly bool hasAutoDestroyOwner;
 
 		private RegisterTimer(float duration, Action onComplete, Action<float> onUpdate,
-			bool isLooped, bool usesRealTime, MonoBehaviour autoDestroyOwner)
+			bool isLooped, bool usesRealTime)
 		{
 			Duration = duration;
 			this.onComplete = onComplete;
 			this.onUpdate = onUpdate;
 			IsLooped = isLooped;
 			UsesRealTime = usesRealTime;
-			this.autoDestroyOwner = autoDestroyOwner;
-			hasAutoDestroyOwner = autoDestroyOwner;
 			startTime = GetWorldTime();
 			lastUpdateTime = startTime;
 		}
@@ -181,7 +196,9 @@ namespace PNLib.Time
 		public void Update()
 		{
 			if (IsDone)
+			{
 				return;
+			}
 
 			if (IsPaused)
 			{
@@ -198,9 +215,13 @@ namespace PNLib.Time
 				onComplete?.Invoke();
 
 				if (IsLooped)
+				{
 					startTime = GetWorldTime();
+				}
 				else
+				{
 					IsCompleted = true;
+				}
 			}
 		}
 	}

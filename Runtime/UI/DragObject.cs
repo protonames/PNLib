@@ -27,16 +27,22 @@ namespace PNLib.UI
 				DragContainer destination = eventData.pointerEnter.GetComponentInParent<DragContainer>();
 
 				if (!destination)
+				{
 					return;
+				}
 
 				if (ReferenceEquals(destination, source))
+				{
 					return;
+				}
 
 				Transform swap = destination.GetChild();
 				transform.SetParent(destination.transform, false);
 
 				if (swap)
+				{
 					swap.SetParent(source.transform, false);
+				}
 			}
 
 			transform.localPosition = Vector3.zero;

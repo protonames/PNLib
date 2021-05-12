@@ -7,12 +7,13 @@ namespace PNLib.Attributes
 	public class StatsModifier : MonoBehaviour
 	{
 		public object Source { get; }
-
 		public StatsModifierType Type { get; }
-
 		public float Value { get; }
 
-		public StatsModifier(float value, StatsModifierType type, object source = null)
+		public StatsModifier(float value, StatsModifierType type)
+			: this(value, type, null) { }
+
+		public StatsModifier(float value, StatsModifierType type, object source)
 		{
 			Value = value;
 			Type = type;

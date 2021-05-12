@@ -23,8 +23,10 @@ namespace PNLib.Utility
 				Collider2D hitTarget = targets[index];
 				T target = hitTarget.GetComponent<T>();
 
-				if (target == null)
+				if (Equals(target, default(T)))
+				{
 					continue;
+				}
 
 				current = target;
 			}
@@ -42,7 +44,9 @@ namespace PNLib.Utility
 			get
 			{
 				if (camera)
+				{
 					return camera;
+				}
 
 				camera = Camera.main;
 				return camera;

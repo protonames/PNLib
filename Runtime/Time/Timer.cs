@@ -9,11 +9,8 @@ namespace PNLib.Time
 		private float duration = .25f;
 
 		public float Progress => 1f - (RemainingTime / duration);
-
 		public float RemainingTime => isPaused ? pauseTimeLeft : next - UnityEngine.Time.time;
-
 		public event Action OnCompletedEvent;
-
 		private bool isPaused;
 		private float next;
 		private float pauseTimeLeft;
@@ -21,10 +18,14 @@ namespace PNLib.Time
 		private void Update()
 		{
 			if (UnityEngine.Time.time <= next)
+			{
 				return;
+			}
 
 			if (isPaused)
+			{
 				return;
+			}
 
 			next = UnityEngine.Time.time + duration;
 			OnCompletedEvent?.Invoke();
@@ -48,12 +49,19 @@ namespace PNLib.Time
 			isPaused = false;
 		}
 
-		public void SetDuration(float duration, bool resetTimer = true)
+		public void SetDuration(float duration)
+		{
+			SetDuration(duration, true);
+		}
+
+		public void SetDuration(float duration, bool resetTimer)
 		{
 			this.duration = duration;
 
 			if (resetTimer)
+			{
 				Restart();
+			}
 		}
 
 		public void Stop()

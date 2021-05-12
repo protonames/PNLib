@@ -6,8 +6,15 @@ namespace PNLib.UI
 {
 	public class HighlanderWindow : MonoBehaviour
 	{
-		public bool IsVisible;
-		public int Order;
+		[SerializeField]
+		private bool isVisible;
+
+		public bool IsVisible => isVisible;
+
+		[SerializeField]
+		private int order;
+
+		public int Order => order;
 		private static readonly List<HighlanderWindow> Windows = new List<HighlanderWindow>();
 
 		private void Awake()
@@ -38,14 +45,16 @@ namespace PNLib.UI
 		private void SetVisible(bool visible)
 		{
 			if (visible)
+			{
 				foreach (HighlanderWindow menu in Windows.Where(
 					menu => menu != this && menu.IsVisible && menu.Order >= Order
 				))
 				{
 					menu.SetVisible(false);
 				}
+			}
 
-			IsVisible = visible;
+			isVisible = visible;
 			gameObject.SetActive(IsVisible);
 		}
 	}
