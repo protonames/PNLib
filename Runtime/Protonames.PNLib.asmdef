@@ -1,6 +1,9 @@
-﻿{
+{
     "name": "Protonames.PNLib",
-    "references": [],
+    "rootNamespace": "PNLib",
+    "references": [
+        "Unity.TextMeshPro"
+    ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

@@ -14,7 +14,7 @@ namespace PNLib.Attributes
 			get => maximum;
 			private set
 			{
-				if (Math.Abs(value - float.Epsilon) < 0f)
+				if (Mathf.Abs(value - float.Epsilon) < 0f)
 					throw new Exception("Stats Maximum can not be zero.");
 
 				hasChanged = true;
@@ -157,7 +157,7 @@ namespace PNLib.Attributes
 			}
 
 			modifiedValue = Mathf.Clamp(modifiedValue, Minimum, Maximum);
-			return (float) Math.Round(modifiedValue, 3);
+			return (float) System.Math.Round(modifiedValue, 3);
 		}
 
 #region Operators
