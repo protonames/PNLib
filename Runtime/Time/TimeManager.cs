@@ -22,12 +22,23 @@ namespace PNLib.Time
 
 		public static void Pause()
 		{
-			UnityEngine.Time.timeScale = 0f;
+			SetTimeScale(0);
 		}
 
 		public static void Resume()
 		{
 			UnityEngine.Time.timeScale = TimeScale;
+		}
+
+		public static void SetTimeScale(float value)
+		{
+			UnityEngine.Time.timeScale = value;
+			UnityEngine.Time.fixedDeltaTime = 0.02F * value;
+		}
+
+		public static void ResetTimeScale()
+		{
+			SetTimeScale(TimeScale);
 		}
 
 		private static IEnumerator FreezeTimeRoutine(float duration)
