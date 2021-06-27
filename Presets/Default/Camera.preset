@@ -22,11 +22,11 @@ Preset:
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: m_BackGroundColor.r
-    value: 0.9450981
+    value: 0.05882353
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: m_BackGroundColor.g
-    value: 0.7686275
+    value: 0.05882353
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: m_BackGroundColor.b
@@ -156,4 +156,16 @@ Preset:
     propertyPath: m_StereoSeparation
     value: 0.022
     objectReference: {fileID: 0}
-  m_ExcludedProperties: []
+  m_ExcludedProperties:
+  - m_NormalizedViewPortRect
+  - m_Depth
+  - m_RenderingPath
+  - m_TargetTexture
+  - m_OcclusionCulling
+  - m_HDR
+  - m_AllowMSAA
+  - m_AllowDynamicResolution
+  - m_TargetDisplay
+  - near clip plane
+  - far clip plane
+  - m_CullingMask
